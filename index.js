@@ -73,11 +73,15 @@ const pets = [
 Use the native filter method to return a new array of only the pets that are dogs
 that have had only one vet vist.
 */
+const dogsWithOneVist = pets.filter(pet => pet.species === 'dog' && pet.vetVisits.length === 1);
+console.log(dogsWithOneVist);
 
 /*
 Use the native filter method to return a new array of only the pets that have had
 vet vists marked as 'Emergency'.
 */
+const emergencyVisits = pets.filter(pet => pet.vetVisits.some(visit => visit.type === 'Emergency'));
+console.log(emergencyVisits);
 
 /*
 Use the map method to return a new array of strings containing each pet's name, age, 
@@ -85,12 +89,14 @@ and gender.
 
 example output =>
 [ 
-    "Noodles - male - 7 years old",
+    "Noodles - male - 7 years old"
     "Fleur - female - 13 years old",
     "Bernie - male - 6 years old",
     "Bart - male - 3 years old"
 ]
 */
+const petInfo = pets.map(pet => `${pet.name} - ${pet.gender} - ${pet.age} years old`);
+console.log(petInfo);
 
 /*
 Use the native map method to return a new array of strings of each pet's vet visit
@@ -107,6 +113,9 @@ example output =>
     "ADMINISTERED VACCINATIONS",
 ]
 */
+const uppercasedNotes = pets.flatMap(pet => pet.vetVisits.map(visit => visit.notes.toUpperCase())
+);
+console.log(uppercasedNotes);
 
 /*
 Use the native reduce method to return a string of each pet's name followed by the
@@ -116,3 +125,8 @@ in the array).
 example output =>
 "Noodles - last visit: October 15, 2024\nFleur - last visit: July 20, 2024\nBernie - last visit: September 5, 2024\nBart - last visit: November 22, 2022"
 */
+const recentVisits = pets.reduce((acc, pet) => {
+    const lastVisit = pet.vetVisits[pet.vetVisits.length -1].date;
+    return acc + `${pet.name} - last visit: ${lastVisit}\n`;
+}, "").trim();
+console.log(recentVisits);
